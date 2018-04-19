@@ -1,0 +1,18 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="M1M3RestrictionTest.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="ArduinoCOM" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">COM10</Value>
+    </Setting>
+    <Setting Name="DisplacementCOM" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">COM0</Value>
+    </Setting>
+    <Setting Name="ILCCOM" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">COM1</Value>
+    </Setting>
+    <Setting Name="Simulate" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
