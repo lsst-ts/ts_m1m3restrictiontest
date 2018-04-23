@@ -40,7 +40,7 @@ namespace M1M3RestrictionTest
             {
                 port.Open();
                 byte[] buffer = new byte[port.BytesToRead];
-                port.Read(buffer, 0, buffer.Length);
+                Read(buffer, buffer.Length);
                 Reset(1);
                 StateChange(1, 1);
                 StateChange(1, 2);
@@ -77,11 +77,11 @@ namespace M1M3RestrictionTest
                     Thread.Sleep(10);
                     port.Write(masterRequestBuffer, 0, masterRequestBuffer.Length);
                     Thread.Sleep(10);
-                    port.Read(responseBuffer, 0, 9);
+                    Read(responseBuffer, 9);
                     var master = ToFloat(responseBuffer);
                     port.Write(slaveRequestBuffer, 0, slaveRequestBuffer.Length);
                     Thread.Sleep(10);
-                    port.Read(responseBuffer, 0, 9);
+                    Read(responseBuffer, 9);
                     var slave = ToFloat(responseBuffer);
                     return new Tuple<float, float>(master, slave);
                 }
@@ -93,6 +93,95 @@ namespace M1M3RestrictionTest
             return new Tuple<float, float>((float)(rnd.NextDouble() * 8000.0 - 4000.0), (float)(rnd.NextDouble() * 8000.0 - 4000.0));
         }
 
+        public float SetForce(byte addr, float setpoint)
+        {
+            if (port.IsOpen)
+            {
+                try
+                {
+
+                    int output = (int)(setpoint * 1000.0);
+                    byte[] buffer = new byte[8];
+                    buffer[0] = addr;
+                    buffer[1] = 75;
+                    buffer[2] = 0;
+                    buffer[3] = (byte)(output >> 16);
+                    buffer[4] = (byte)(output >> 8); 
+                    buffer[5] = (byte)output;
+                    SetCRC(buffer);
+                    port.Write(buffer, 0, buffer.Length);
+                    Thread.Sleep(10);
+                    byte[] response = new byte[9];
+                    Read(response, 9);
+                    var value = ToFloat(response);
+                    return value;
+                }
+                catch (TimeoutException)
+                {
+                    return 9999;
+                }
+            }
+            return (float)(rnd.NextDouble() * 8000.0 - 4000.0);
+        }
+
+        private void Read(byte[] buffer, int length)
+        {
+            int toRead = length;
+            int read = 0;
+            while(read != length)
+            {
+                int got = port.Read(buffer, read, toRead);
+                read += got;
+                toRead -= got;
+            }
+        }
+
+        public Tuple<float, float> ReadPressure(byte addr)
+        {
+            if (port.IsOpen)
+            {
+                try
+                {
+                    byte[] buffer = new byte[4];
+                    buffer[0] = addr;
+                    buffer[1] = 119;
+                    SetCRC(buffer);
+                    port.Write(buffer, 0, buffer.Length);
+                    Thread.Sleep(10);
+                    buffer = new byte[20];
+                    Read(buffer, 20);
+                    byte[] tmp = new byte[4];
+                    tmp[0] = buffer[5];
+                    tmp[1] = buffer[4];
+                    tmp[2] = buffer[3];
+                    tmp[3] = buffer[2];
+                    float p1 = BitConverter.ToSingle(tmp, 0);
+                    tmp[0] = buffer[9];
+                    tmp[1] = buffer[8];
+                    tmp[2] = buffer[7];
+                    tmp[3] = buffer[6];
+                    float p2 = BitConverter.ToSingle(tmp, 0);
+                    tmp[0] = buffer[13];
+                    tmp[1] = buffer[12];
+                    tmp[2] = buffer[11];
+                    tmp[3] = buffer[10];
+                    float p3 = BitConverter.ToSingle(tmp, 0);
+                    tmp[0] = buffer[17];
+                    tmp[1] = buffer[16];
+                    tmp[2] = buffer[15];
+                    tmp[3] = buffer[14];
+                    float p4 = BitConverter.ToSingle(tmp, 0);
+                    return new Tuple<float, float>(p1, p2);
+                }
+                catch (TimeoutException)
+                {
+                    return new Tuple<float, float>(9999, 9999);
+                }
+
+            }
+            return new Tuple<float, float>((float)(rnd.NextDouble() * 120.0 - 60.0), (float)(rnd.NextDouble() * 120.0 - 60.0));
+        }
+
         private void Reset(byte addr)
         {
             byte[] buffer = new byte[4];
@@ -102,7 +191,7 @@ namespace M1M3RestrictionTest
             port.Write(buffer, 0, buffer.Length);
             Thread.Sleep(800);
             buffer = new byte[4];
-            port.Read(buffer, 0, 4);
+            Read(buffer, 4);
             //MessageBox.Show("Reset: " + buffer[1].ToString());
         }
 
@@ -117,7 +206,7 @@ namespace M1M3RestrictionTest
             port.Write(buffer, 0, buffer.Length);
             Thread.Sleep(250);
             buffer = new byte[6];
-            port.Read(buffer, 0, 6);
+            Read(buffer, 6);
             //MessageBox.Show("State: " + buffer[1].ToString());
         }
 

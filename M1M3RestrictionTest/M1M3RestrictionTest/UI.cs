@@ -54,7 +54,7 @@ namespace M1M3RestrictionTest
         private void btnDisableRestriction_Click(object sender, EventArgs e) { TurnOn(); }
         private void btnEnableRestriction_Click(object sender, EventArgs e) { TurnOff(); }
         private void btnReadDisplacement_Click(object sender, EventArgs e) { ReadDisplacement(); }
-        private void btnSetILCs_Click(object sender, EventArgs e) { SetILC((double)nudMaster.Value, (double)nudSlave.Value); }
+        private void btnSetILCs_Click(object sender, EventArgs e) { SetILC((float)nudMaster.Value, (float)nudSlave.Value); }
 
         private void btnRunTest_Click(object sender, EventArgs e)
         {
@@ -70,18 +70,18 @@ namespace M1M3RestrictionTest
 
         private void bgwTest_DoWork(object sender, DoWorkEventArgs e)
         {
-            double m = 0, s = 0, h = 0;
+            float m = 0, s = 0, h = 0;
             InvokeIfRequired(() =>
             {
-                m = (double)nudMasterForce.Value;
-                s = (double)nudSlaveForce.Value;
-                h = (double)nudHoldTime.Value;
+                m = (float)nudMasterForce.Value;
+                s = (float)nudSlaveForce.Value;
+                h = (float)nudHoldTime.Value;
             });
             TurnOn();
             SetILC(0, s);
             MessageBox.Show("Please position the block spacer. Once spacer is positioned click OK.", "Operation Action Required", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             ReadDisplacement(true);
-            SetILC(m, m);
+            SetILC(m, s);
             AddSample();
             var iterations = h / 0.05;
             var i = 0;
@@ -90,7 +90,7 @@ namespace M1M3RestrictionTest
             for (i = 0; i < iterations; ++i)
             {
                 sw.Restart();
-                SetILC(m, m);
+                SetILC(m, s);
                 ReadDisplacement();
                 AddSample();
                 sw.Stop();
@@ -184,9 +184,10 @@ namespace M1M3RestrictionTest
             });
         }
 
-        private void SetILC(double master, double slave)
+        private void SetILC(float master, float slave)
         {
-            var values = ilc.Update(master, slave);
+            var values = new Tuple<float, float>(ilc.SetForce(1, master), ilc.SetForce(2, slave));
+            //var values = ilc.Update(master, slave);
             lastMasterControl = master;
             lastSlaveControl = slave;
             lastMasterSensor = values.Item1;
@@ -221,6 +222,19 @@ namespace M1M3RestrictionTest
                 Invoke(x);
             }
             x();
+        }
+
+        private void btnReadPressure_Click(object sender, EventArgs e)
+        {
+            var m = ilc.ReadPressure(1);
+            var s = ilc.ReadPressure(2);
+            InvokeIfRequired(() =>
+            {
+                txtAxialPush1.Text = m.Item1.ToString("0.000");
+                txtAxialPull1.Text = m.Item2.ToString("0.000");
+                txtAxialPush2.Text = s.Item1.ToString("0.000");
+                txtAxialPull2.Text = s.Item2.ToString("0.000");
+            });
         }
     }
 }

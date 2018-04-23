@@ -68,6 +68,11 @@
             this.tbpDebug = new System.Windows.Forms.TabPage();
             this.bgwTest = new System.ComponentModel.BackgroundWorker();
             this.sfdFiles = new System.Windows.Forms.SaveFileDialog();
+            this.btnReadPressure = new System.Windows.Forms.Button();
+            this.txtAxialPush1 = new System.Windows.Forms.TextBox();
+            this.txtAxialPull1 = new System.Windows.Forms.TextBox();
+            this.txtAxialPush2 = new System.Windows.Forms.TextBox();
+            this.txtAxialPull2 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.nudMaster)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudSlave)).BeginInit();
             this.tbcMain.SuspendLayout();
@@ -415,6 +420,16 @@
             this.nudMasterForce.DecimalPlaces = 3;
             this.nudMasterForce.Location = new System.Drawing.Point(167, 80);
             this.nudMasterForce.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.nudMasterForce.Maximum = new decimal(new int[] {
+            4000,
+            0,
+            0,
+            0});
+            this.nudMasterForce.Minimum = new decimal(new int[] {
+            4000,
+            0,
+            0,
+            -2147483648});
             this.nudMasterForce.Name = "nudMasterForce";
             this.nudMasterForce.Size = new System.Drawing.Size(180, 26);
             this.nudMasterForce.TabIndex = 1;
@@ -437,6 +452,16 @@
             this.nudSlaveForce.DecimalPlaces = 3;
             this.nudSlaveForce.Location = new System.Drawing.Point(167, 142);
             this.nudSlaveForce.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.nudSlaveForce.Maximum = new decimal(new int[] {
+            4000,
+            0,
+            0,
+            0});
+            this.nudSlaveForce.Minimum = new decimal(new int[] {
+            4000,
+            0,
+            0,
+            -2147483648});
             this.nudSlaveForce.Name = "nudSlaveForce";
             this.nudSlaveForce.Size = new System.Drawing.Size(180, 26);
             this.nudSlaveForce.TabIndex = 2;
@@ -537,8 +562,13 @@
             this.tbpDebug.Controls.Add(this.nudSlave);
             this.tbpDebug.Controls.Add(this.lblmm);
             this.tbpDebug.Controls.Add(this.nudMaster);
+            this.tbpDebug.Controls.Add(this.btnReadPressure);
             this.tbpDebug.Controls.Add(this.btnSetILCs);
+            this.tbpDebug.Controls.Add(this.txtAxialPull2);
+            this.tbpDebug.Controls.Add(this.txtAxialPull1);
             this.tbpDebug.Controls.Add(this.txtSlave);
+            this.tbpDebug.Controls.Add(this.txtAxialPush2);
+            this.tbpDebug.Controls.Add(this.txtAxialPush1);
             this.tbpDebug.Controls.Add(this.txtMaster);
             this.tbpDebug.Location = new System.Drawing.Point(4, 29);
             this.tbpDebug.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -558,6 +588,61 @@
             // 
             this.sfdFiles.Filter = "CSV Files (*.csv)|*.csv";
             this.sfdFiles.Title = "Save Log File";
+            // 
+            // btnReadPressure
+            // 
+            this.btnReadPressure.Location = new System.Drawing.Point(9, 381);
+            this.btnReadPressure.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnReadPressure.Name = "btnReadPressure";
+            this.btnReadPressure.Size = new System.Drawing.Size(192, 35);
+            this.btnReadPressure.TabIndex = 6;
+            this.btnReadPressure.Text = "Read Pressure";
+            this.btnReadPressure.UseVisualStyleBackColor = true;
+            this.btnReadPressure.Click += new System.EventHandler(this.btnReadPressure_Click);
+            // 
+            // txtAxialPush1
+            // 
+            this.txtAxialPush1.Location = new System.Drawing.Point(219, 385);
+            this.txtAxialPush1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txtAxialPush1.Name = "txtAxialPush1";
+            this.txtAxialPush1.ReadOnly = true;
+            this.txtAxialPush1.Size = new System.Drawing.Size(148, 26);
+            this.txtAxialPush1.TabIndex = 9;
+            this.txtAxialPush1.Text = "0.000";
+            this.txtAxialPush1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txtAxialPull1
+            // 
+            this.txtAxialPull1.Location = new System.Drawing.Point(436, 385);
+            this.txtAxialPull1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txtAxialPull1.Name = "txtAxialPull1";
+            this.txtAxialPull1.ReadOnly = true;
+            this.txtAxialPull1.Size = new System.Drawing.Size(148, 26);
+            this.txtAxialPull1.TabIndex = 10;
+            this.txtAxialPull1.Text = "0.000";
+            this.txtAxialPull1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txtAxialPush2
+            // 
+            this.txtAxialPush2.Location = new System.Drawing.Point(219, 421);
+            this.txtAxialPush2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txtAxialPush2.Name = "txtAxialPush2";
+            this.txtAxialPush2.ReadOnly = true;
+            this.txtAxialPush2.Size = new System.Drawing.Size(148, 26);
+            this.txtAxialPush2.TabIndex = 9;
+            this.txtAxialPush2.Text = "0.000";
+            this.txtAxialPush2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txtAxialPull2
+            // 
+            this.txtAxialPull2.Location = new System.Drawing.Point(436, 421);
+            this.txtAxialPull2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txtAxialPull2.Name = "txtAxialPull2";
+            this.txtAxialPull2.ReadOnly = true;
+            this.txtAxialPull2.Size = new System.Drawing.Size(148, 26);
+            this.txtAxialPull2.TabIndex = 10;
+            this.txtAxialPull2.Text = "0.000";
+            this.txtAxialPull2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // UI
             // 
@@ -629,6 +714,11 @@
         private System.Windows.Forms.TabPage tbpDebug;
         private System.ComponentModel.BackgroundWorker bgwTest;
         private System.Windows.Forms.SaveFileDialog sfdFiles;
+        private System.Windows.Forms.Button btnReadPressure;
+        private System.Windows.Forms.TextBox txtAxialPull1;
+        private System.Windows.Forms.TextBox txtAxialPush1;
+        private System.Windows.Forms.TextBox txtAxialPull2;
+        private System.Windows.Forms.TextBox txtAxialPush2;
     }
 }
 
