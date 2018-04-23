@@ -34,7 +34,7 @@ namespace M1M3RestrictionTest.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("COM0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("COM12")]
         public string DisplacementCOM {
             get {
                 return ((string)(this["DisplacementCOM"]));
@@ -43,7 +43,7 @@ namespace M1M3RestrictionTest.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("COM1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("COM11")]
         public string ILCCOM {
             get {
                 return ((string)(this["ILCCOM"]));
@@ -52,7 +52,7 @@ namespace M1M3RestrictionTest.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool Simulate {
             get {
                 return ((bool)(this["Simulate"]));

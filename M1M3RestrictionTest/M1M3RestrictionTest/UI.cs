@@ -81,7 +81,7 @@ namespace M1M3RestrictionTest
             SetILC(0, s);
             MessageBox.Show("Please position the block spacer. Once spacer is positioned click OK.", "Operation Action Required", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             ReadDisplacement(true);
-            SetILC(m, m + 100);
+            SetILC(m, m);
             AddSample();
             var iterations = h / 0.05;
             var i = 0;
@@ -90,7 +90,7 @@ namespace M1M3RestrictionTest
             for (i = 0; i < iterations; ++i)
             {
                 sw.Restart();
-                SetILC(m, m + 100);
+                SetILC(m, m);
                 ReadDisplacement();
                 AddSample();
                 sw.Stop();
@@ -176,9 +176,12 @@ namespace M1M3RestrictionTest
                 zero = value;
             }
             value -= zero;
-            lastDisplacement = value;
-            txtDisplacement.Text = value.ToString("0.000");
-            lblDisplacementValue.Text = value.ToString("0.000");
+            InvokeIfRequired(() =>
+            {
+                lastDisplacement = value;
+                txtDisplacement.Text = value.ToString("0.000");
+                lblDisplacementValue.Text = value.ToString("0.000");
+            });
         }
 
         private void SetILC(double master, double slave)

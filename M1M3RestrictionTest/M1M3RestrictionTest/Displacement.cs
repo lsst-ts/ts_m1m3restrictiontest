@@ -37,7 +37,7 @@ namespace M1M3RestrictionTest
                 var line = port.ReadLine();
                 var startIndex = line.IndexOf(',') + 1;
                 var stopIndex = line.IndexOf('\r') - startIndex;
-                return double.Parse(line.Substring(startIndex, stopIndex - startIndex));
+                return double.Parse(line.Substring(startIndex, 9));
             }
             return (rnd.NextDouble() * 60.0) - 30.0;
         }
